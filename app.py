@@ -12,49 +12,57 @@ st.subheader("Diagram Batang")
 # reading the database
 data = pd.read_csv("tips.csv")
 
-# Bar chart with day against tip
-plt.bar(data['day'], data['tip'])
-plt.title("Bar Chart")
-plt.xlabel('Day')
-plt.ylabel('Tip')
+# Create the figure and axis objects
+fig, ax = plt.subplots()
 
-# Now use st.pyplot to render the plot
-st.pyplot()
+# Bar chart with day against tip
+ax.bar(data['day'], data['tip'])
+ax.set_title("Bar Chart")
+ax.set_xlabel('Day')
+ax.set_ylabel('Tip')
+
+# Display the plot using st.pyplot() with the figure object
+st.pyplot(fig)
 
 ############################################################
 st.subheader("Histogram")
 # reading the database
 data = pd.read_csv("tips.csv")
 
-sns.histplot(x='total_bill', data=data, kde=True, hue='sex')
+# Create the figure and axis objects
+fig, ax = plt.subplots()
 
-# Use st.pyplot to render the histogram
-st.pyplot()
+# Create the histogram using seaborn
+sns.histplot(x='total_bill', data=data, kde=True, hue='sex', ax=ax)
+
+# Display the plot using st.pyplot() with the figure object
+st.pyplot(fig)
 
 ############################################################
 st.subheader("Sliders and Selectors")
 # reading the database
 data = pd.read_csv("tips.csv")
 
+# Create the plotly figure
 plot = px.Figure(data=[px.Scatter(
-  y=data['tip'],
-  mode='lines',)
+    y=data['tip'],
+    mode='lines',)
 ])
 
 plot.update_layout(
-  xaxis=dict(
-    rangeselector=dict(
-      buttons=list([
-        dict(count=1,
-            step="day",
-            stepmode="backward"),
-      ])
-    ),
-    rangeslider=dict(
-      visible=True
-    ),
-  )
+    xaxis=dict(
+        rangeselector=dict(
+            buttons=list([
+                dict(count=1,
+                    step="day",
+                    stepmode="backward"),
+            ])
+        ),
+        rangeslider=dict(
+            visible=True
+        ),
+    )
 )
 
-# Use st.plotly_chart to render the plotly figure
+# Display the plot using st.plotly_chart()
 st.plotly_chart(plot)
